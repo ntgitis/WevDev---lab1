@@ -8,23 +8,24 @@ import "./styles.css";
  */
 function TopBar({ context, advancedFeature, setAdvancedFeature }) {
   return (
-    <AppBar className="topbar-appBar" position="absolute">
-      <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant="h5" color="inherit">
-          Nguyen Minh Hoang
+    <AppBar className="topbar-appBar" position="static">
+      <Toolbar className="topbar-toolbar">
+        <Typography variant="h6" className="topbar-title">
+          Nam Tran
         </Typography>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div className="topbar-right">
           <FormControlLabel
             control={
               <Checkbox
                 checked={advancedFeature}
                 onChange={(e) => setAdvancedFeature(e.target.checked)}
-                style={{ color: 'white' }}
+                className="topbar-checkbox"
               />
             }
             label="Advanced"
+            className="topbar-label"
           />
-          <Typography variant="h5" color="inherit">
+          <Typography variant="body1" className="topbar-context">
             {context}
           </Typography>
         </div>

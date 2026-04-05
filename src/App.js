@@ -16,17 +16,14 @@ const App = (props) => {
   return (
       <Router>
         <div>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TopBar context={topBarContext} advancedFeature={advancedFeature} setAdvancedFeature={setAdvancedFeature} />
-            </Grid>
-            <div className="main-topbar-buffer" />
-            <Grid item sm={3}>
+          <TopBar context={topBarContext} advancedFeature={advancedFeature} setAdvancedFeature={setAdvancedFeature} />
+          <Grid container spacing={2} style={{ padding: '16px', marginTop: 0 }}>
+            <Grid item xs={12} sm={3}>
               <Paper className="main-grid-item">
                 <UserList />
               </Paper>
             </Grid>
-            <Grid item sm={9}>
+            <Grid item xs={12} sm={9}>
               <Paper className="main-grid-item">
                 <Routes>
                   <Route
