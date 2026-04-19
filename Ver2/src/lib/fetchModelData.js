@@ -1,5 +1,3 @@
-import models from "../modelData/models";
-
 /**
  * fetchModel - Fetch a model from the web server.
  *
@@ -7,30 +5,27 @@ import models from "../modelData/models";
  * @returns {Promise}       A Promise that resolves to the JSON data.
  */
 async function fetchModel(url) {
-  return new Promise((resolve, reject) => {
-    // Giả lập mạng chậm một chút (100ms) để giống với fetch thật
-    setTimeout(() => {
-      try {
-        if (url === "/user/list") {
-          resolve({ data: models.userListModel() });
-        } else if (url.startsWith("/user/")) {
-          const id = url.split("/")[2];
-          const user = models.userModel(id);
-          if (user) resolve({ data: user });
-          else reject(new Error("User not found"));
-        } else if (url.startsWith("/photosOfUser/")) {
-          const id = url.split("/")[2];
-          const photos = models.photoOfUserModel(id);
-          if (photos) resolve({ data: photos });
-          else reject(new Error("Photos not found"));
-        } else {
-          reject(new Error(`Báo lỗi mạng vì đường dẫn ${url} không tồn tại`));
-        }
-      } catch (error) {
-        reject(error);
-      }
-    }, 100);
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
+
+  let payload = null;
+  try {
+    payload = await response.json();
+  } catch (error) {
+    payload = null;
+  }
+
+  if (!response.ok) {
+    const errorMessage =
+      payload?.message || `Request failed: ${response.status}`;
+    throw new Error(errorMessage);
+  }
+
+  return { data: payload };
 }
 
 export default fetchModel;
